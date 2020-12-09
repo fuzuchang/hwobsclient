@@ -15,16 +15,16 @@
  *
  */
 
-namespace Obs\Internal;
+namespace ObsV3\Internal;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\RequestException;
-use Obs\ObsException;
-use Obs\Internal\Common\Model;
-use Obs\Internal\Resource\Constants;
-use Obs\Log\ObsLog;
+use ObsV3\ObsException;
+use ObsV3\Internal\Common\Model;
+use ObsV3\Internal\Resource\Constants;
+use ObsV3\Log\ObsLog;
 use Psr\Http\Message\StreamInterface;
-use Obs\Internal\Common\CheckoutStream;
+use ObsV3\Internal\Common\CheckoutStream;
 
 trait GetResponseTrait
 {

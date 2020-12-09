@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2019 Huawei Technologies Co.,Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -14,9 +15,9 @@
  *
  */
 
-namespace Obs\Internal\Resource;
+namespace ObsV3\Internal\Resource;
 
-class V2RequestResource {
+class OBSRequestResource {
     public static $RESOURCE_ARRAY = [ 
             'operations' => [ 
                     'createBucket' => [ 
@@ -30,7 +31,7 @@ class V2RequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-acl',
+                                            'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'Bucket' => [ 
@@ -40,36 +41,30 @@ class V2RequestResource {
                                     ],
                                     'LocationConstraint' => [ 
                                             'type' => 'string',
-                                            'location' => 'xml'
+                                            'location' => 'xml',
+                                            'sentAs' => 'Location'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-default-storage-class',
+                                            'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ]
                             ],
                             'responseParameters' => [ 
                                     'Location' => [ 
                                             'type' => 'string',
-                                            'location' => 'header',
+                                            'location' => 'header'
                                     ],
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-request-id'
+                                            'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
 
                     'listBuckets' => [ 
                             'httpMethod' => 'GET',
-                            'requestParameters' => [
-                                'QueryLocation' => [
-                                    'type' => 'boolean',
-                                    'location' => 'header',
-                                    'sentAs' => 'x-amz-location',
-                                ],
-                            ],
                             'responseParameters' => [ 
                                     'Buckets' => [ 
                                             'type' => 'array',
@@ -86,8 +81,8 @@ class V2RequestResource {
                                                             'CreationDate' => [ 
                                                                     'type' => 'string'
                                                             ],
-                                                            'Location' => [
-                                                                'type' => 'string'
+                                                            'Location' => [ 
+                                                                    'type' => 'string'
                                                             ]
                                                     ]
                                             ]
@@ -96,9 +91,6 @@ class V2RequestResource {
                                             'type' => 'object',
                                             'location' => 'xml',
                                             'properties' => [ 
-                                                    'DisplayName' => [ 
-                                                            'type' => 'string'
-                                                    ],
                                                     'ID' => [ 
                                                             'type' => 'string'
                                                     ]
@@ -106,7 +98,7 @@ class V2RequestResource {
                                     ],
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-request-id'
+                                            'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
@@ -125,7 +117,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -201,12 +193,12 @@ class V2RequestResource {
                                                                     'StorageClass' => [ 
                                                                             'type' => 'string'
                                                                     ],
+                                                                    'Type' => [ 
+                                                                            'type' => 'string'
+                                                                    ],
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
-                                                                                    'DisplayName' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -249,11 +241,11 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'Location' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-bucket-region'
+                                                    'sentAs' => 'x-obs-bucket-location'
                                             ]
                                     ]
                             ]
@@ -350,12 +342,12 @@ class V2RequestResource {
                                                                     'LastModified' => [ 
                                                                             'type' => 'string'
                                                                     ],
+                                                                    'Type' => [ 
+                                                                            'type' => 'string'
+                                                                    ],
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
-                                                                                    'DisplayName' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -379,9 +371,6 @@ class V2RequestResource {
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
-                                                                                    'DisplayName' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -436,11 +425,11 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'Location' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-bucket-region'
+                                                    'sentAs' => 'x-obs-bucket-location'
                                             ]
                                     ]
                             ]
@@ -468,16 +457,16 @@ class V2RequestResource {
                             'responseParameters' => [ 
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-request-id'
+                                            'sentAs' => 'x-obs-request-id'
                                     ],
                                     'StorageClass' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-default-storage-class'
+                                            'sentAs' => 'x-obs-storage-class'
                                     ],
 
                                     'Location' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-bucket-region'
+                                            'sentAs' => 'x-obs-bucket-location'
                                     ],
 
                                     'AllowOrigin' => [ 
@@ -519,12 +508,11 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'Location' => [ 
                                                     'type' => 'string',
-                                                    'sentAs' => 'LocationConstraint',
                                                     'location' => 'xml'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -554,7 +542,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -584,7 +572,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -610,7 +598,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -618,10 +606,10 @@ class V2RequestResource {
 
                     'setBucketStoragePolicy' => [ 
                             'httpMethod' => 'PUT',
-                            'specialParam' => 'storagePolicy',
+                            'specialParam' => 'storageClass',
                             'data' => [ 
                                     'xmlRoot' => [ 
-                                            'name' => 'StoragePolicy'
+                                            'name' => 'StorageClass'
                                     ]
                             ],
                             'requestParameters' => [ 
@@ -634,8 +622,10 @@ class V2RequestResource {
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'xml',
-                                            'sentAs' => 'DefaultStorageClass',
-                                            'transform' => 'storageClass'
+                                            'transform' => 'storageClass',
+                                            'data' => [ 
+                                                    'xmlFlattened' => true
+                                            ]
                                     ]
                             ],
                             'responseParameters' => [ 
@@ -643,7 +633,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -664,12 +654,11 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'StorageClass' => [ 
                                                     'type' => 'string',
-                                                    'location' => 'xml',
-                                                    'sentAs' => 'DefaultStorageClass'
+                                                    'location' => 'xml'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -692,41 +681,48 @@ class V2RequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-acl',
+                                            'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'GrantRead' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-read'
+                                            'sentAs' => 'x-obs-grant-read'
                                     ],
                                     'GrantWrite' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-write'
+                                            'sentAs' => 'x-obs-grant-write'
                                     ],
                                     'GrantReadAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-read-acp'
+                                            'sentAs' => 'x-obs-grant-read-acp'
                                     ],
                                     'GrantWriteAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-write-acp'
+                                            'sentAs' => 'x-obs-grant-write-acp'
                                     ],
                                     'GrantFullControl' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-full-control'
+                                            'sentAs' => 'x-obs-grant-full-control'
+                                    ],
+                                    'GrantDeliveryRead' => [ 
+                                            'type' => 'string',
+                                            'location' => 'header',
+                                            'sentAs' => 'x-obs-grant-read-delivered'
+                                    ],
+                                    'GrantDeliveryFullControl' => [ 
+                                            'type' => 'string',
+                                            'location' => 'header',
+                                            'sentAs' => 'x-obs-grant-full-control-delivered'
                                     ],
                                     'Owner' => [ 
                                             'type' => 'object',
                                             'location' => 'xml',
                                             'properties' => [ 
-                                                    'DisplayName' => [ 
-                                                            'type' => 'string'
-                                                    ],
                                                     'ID' => [ 
                                                             'type' => 'string'
                                                     ]
@@ -743,29 +739,21 @@ class V2RequestResource {
                                                             'Grantee' => [ 
                                                                     'type' => 'object',
                                                                     'properties' => [ 
-                                                                            'DisplayName' => [ 
-                                                                                    'type' => 'string'
-                                                                            ],
                                                                             'ID' => [ 
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'Type' => [ 
-                                                                                    'required' => true,
-                                                                                    'type' => 'string',
-                                                                                    'sentAs' => 'xsi:type',
-                                                                                    'data' => [ 
-                                                                                            'xmlAttribute' => true,
-                                                                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance'
-                                                                                    ]
-                                                                            ],
                                                                             'URI' => [ 
                                                                                     'type' => 'string',
+                                                                                    'sentAs' => 'Canned',
                                                                                     'transform' => 'aclUri'
                                                                             ]
                                                                     ]
                                                             ],
                                                             'Permission' => [ 
                                                                     'type' => 'string'
+                                                            ],
+                                                            'Delivered' => [
+                                                                    'type' => 'boolean'
                                                             ]
                                                     ]
                                             ]
@@ -776,7 +764,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -797,15 +785,12 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'Owner' => [ 
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'properties' => [ 
-                                                            'DisplayName' => [ 
-                                                                    'type' => 'string'
-                                                            ],
                                                             'ID' => [ 
                                                                     'type' => 'string'
                                                             ]
@@ -823,19 +808,20 @@ class V2RequestResource {
                                                                     'Grantee' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
-                                                                                    'DisplayName' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ],
                                                                                     'URI' => [ 
-                                                                                            'type' => 'string'
+                                                                                            'type' => 'string',
+                                                                                            'sentAs' => 'Canned'
                                                                                     ]
                                                                             ]
                                                                     ],
                                                                     'Permission' => [ 
                                                                             'type' => 'string'
+                                                                    ],
+                                                                    'Delivered' => [ 
+                                                                            'type' => 'boolean'
                                                                     ]
                                                             ]
                                                     ]
@@ -859,6 +845,10 @@ class V2RequestResource {
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
+                                    'Agency' => [
+                                            'type' => 'string',
+                                            'location' => 'xml'
+                                    ],
                                     'LoggingEnabled' => [ 
                                             'type' => 'object',
                                             'location' => 'xml',
@@ -878,23 +868,12 @@ class V2RequestResource {
                                                                             'Grantee' => [ 
                                                                                     'type' => 'object',
                                                                                     'properties' => [ 
-                                                                                            'DisplayName' => [ 
-                                                                                                    'type' => 'string'
-                                                                                            ],
                                                                                             'ID' => [ 
                                                                                                     'type' => 'string'
                                                                                             ],
-                                                                                            'Type' => [ 
-                                                                                                    'required' => true,
-                                                                                                    'type' => 'string',
-                                                                                                    'sentAs' => 'xsi:type',
-                                                                                                    'data' => [ 
-                                                                                                            'xmlAttribute' => true,
-                                                                                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance'
-                                                                                                    ]
-                                                                                            ],
                                                                                             'URI' => [ 
                                                                                                     'type' => 'string',
+                                                                                                    'sentAs' => 'Canned',
                                                                                                     'transform' => 'aclUri'
                                                                                             ]
                                                                                     ]
@@ -913,7 +892,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -931,7 +910,11 @@ class V2RequestResource {
                             ],
                             'responseParameters' => [ 
                                     'type' => 'object',
-                                    'properties' => [ 
+                                    'properties' => [
+                                            'Agency' => [
+                                                    'type' => 'string',
+                                                    'location' => 'xml'
+                                            ],
                                             'LoggingEnabled' => [ 
                                                     'type' => 'object',
                                                     'location' => 'xml',
@@ -950,14 +933,12 @@ class V2RequestResource {
                                                                                     'Grantee' => [ 
                                                                                             'type' => 'object',
                                                                                             'properties' => [ 
-                                                                                                    'DisplayName' => [ 
-                                                                                                            'type' => 'string'
-                                                                                                    ],
                                                                                                     'ID' => [ 
                                                                                                             'type' => 'string'
                                                                                                     ],
                                                                                                     'URI' => [ 
-                                                                                                            'type' => 'string'
+                                                                                                            'type' => 'string',
+                                                                                                            'sentAs' => 'Canned'
                                                                                                     ]
                                                                                             ]
                                                                                     ],
@@ -974,7 +955,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1000,7 +981,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1025,7 +1006,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1046,7 +1027,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1165,7 +1146,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1186,7 +1167,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'Rules' => [ 
                                                     'type' => 'array',
@@ -1292,7 +1273,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1393,7 +1374,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1414,7 +1395,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'RedirectAllRequestsTo' => [ 
                                                     'type' => 'object',
@@ -1507,7 +1488,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1537,7 +1518,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1558,7 +1539,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'Status' => [ 
                                                     'type' => 'string',
@@ -1652,7 +1633,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1673,7 +1654,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'CorsRules' => [ 
                                                     'type' => 'array',
@@ -1753,7 +1734,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1795,7 +1776,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -1863,7 +1844,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1884,7 +1865,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'Tags' => [ 
                                                     'type' => 'array',
@@ -1922,7 +1903,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -1943,7 +1924,6 @@ class V2RequestResource {
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-
                                     'TopicConfigurations' => [ 
                                             'type' => 'array',
                                             'location' => 'xml',
@@ -1960,10 +1940,74 @@ class V2RequestResource {
                                                                     'type' => 'string',
                                                                     'sentAs' => 'Id'
                                                             ],
+                                                            'Filter' => [
+                                                                'type' => 'array',
+                                                                'wrapper' => 'Filter',
+                                                                'sentAs' => 'Object',
+                                                                'items' => [
+                                                                    'type' => 'object',
+                                                                    'sentAs' => 'FilterRule',
+                                                                    'properties' => [
+                                                                        'Name' => [
+                                                                            'type' => 'string'
+                                                                        ],
+                                                                        
+                                                                        'Value' => [
+                                                                            'type' => 'string'
+                                                                        ]
+                                                                    ]
+                                                                ]
+                                                            ],
+                                                            'Topic' => [ 
+                                                                    'type' => 'string'
+                                                            ],
+                                                            'Event' => [ 
+                                                                    'type' => 'array',
+                                                                    'data' => [ 
+                                                                            'xmlFlattened' => true
+                                                                    ],
+                                                                    'items' => [ 
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'Event',
+                                                                            'transform' => 'event'
+                                                                    ]
+                                                            ],
+                                                    ]
+                                            ]
+                                    ],
+                                    'FunctionStageConfigurations' => [ 
+                                            'type' => 'array',
+                                            'location' => 'xml',
+                                            'sentAs' => 'FunctionStageConfiguration',
+                                            'data' => [ 
+                                                    'xmlFlattened' => true
+                                            ],
+                                            'items' => [ 
+                                                    'type' => 'object',
+                                                    'location' => 'xml',
+                                                    'sentAs' => 'FunctionStageConfiguration',
+                                                    'properties' => [ 
+                                                            'ID' => [ 
+                                                                    'type' => 'string',
+                                                                    'sentAs' => 'Id'
+                                                            ],
+                                                            'FunctionStage' => [ 
+                                                                    'type' => 'string'
+                                                            ],
+                                                            'Event' => [ 
+                                                                    'type' => 'array',
+                                                                    'data' => [ 
+                                                                            'xmlFlattened' => true
+                                                                    ],
+                                                                    'items' => [ 
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'Event'
+                                                                    ]
+                                                            ],
                                                             'Filter' => [ 
                                                                     'type' => 'array',
                                                                     'wrapper' => 'Filter',
-                                                                    'sentAs' => 'S3Key',
+                                                                    'sentAs' => 'Object',
                                                                     'items' => [ 
                                                                             'type' => 'object',
                                                                             'sentAs' => 'FilterRule',
@@ -1977,21 +2021,57 @@ class V2RequestResource {
                                                                                     ]
                                                                             ]
                                                                     ]
-                                                            ],
-                                                            'Topic' => [
-                                                                'type' => 'string'
-                                                            ],
-                                                            'Event' => [
-                                                                'type' => 'array',
-                                                                'data' => [
-                                                                    'xmlFlattened' => true
-                                                                ],
-                                                                'items' => [
+                                                            ]
+                                                    ]
+                                            ]
+                                    ],
+                                    'FunctionGraphConfigurations' => [ 
+                                            'type' => 'array',
+                                            'location' => 'xml',
+                                            'sentAs' => 'FunctionGraphConfiguration',
+                                            'data' => [ 
+                                                    'xmlFlattened' => true
+                                            ],
+                                            'items' => [ 
+                                                    'type' => 'object',
+                                                    'location' => 'xml',
+                                                    'sentAs' => 'FunctionGraphConfiguration',
+                                                    'properties' => [ 
+                                                            'ID' => [ 
                                                                     'type' => 'string',
-                                                                    'sentAs' => 'Event',
-                                                                    'transform' => 'event'
-                                                                ]
+                                                                    'sentAs' => 'Id'
                                                             ],
+                                                            'FunctionGraph' => [ 
+                                                                    'type' => 'string'
+                                                            ],
+                                                            'Event' => [ 
+                                                                    'type' => 'array',
+                                                                    'data' => [ 
+                                                                            'xmlFlattened' => true
+                                                                    ],
+                                                                    'items' => [ 
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'Event'
+                                                                    ]
+                                                            ],
+                                                            'Filter' => [ 
+                                                                    'type' => 'array',
+                                                                    'wrapper' => 'Filter',
+                                                                    'sentAs' => 'Object',
+                                                                    'items' => [ 
+                                                                            'type' => 'object',
+                                                                            'sentAs' => 'FilterRule',
+                                                                            'properties' => [ 
+                                                                                    'Name' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
+
+                                                                                    'Value' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ]
+                                                                            ]
+                                                                    ]
+                                                            ]
                                                     ]
                                             ]
                                     ]
@@ -2001,7 +2081,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -2022,7 +2102,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'TopicConfigurations' => [ 
                                                     'type' => 'array',
@@ -2056,7 +2136,107 @@ class V2RequestResource {
                                                                     'Filter' => [ 
                                                                             'type' => 'array',
                                                                             'wrapper' => 'Filter',
-                                                                            'sentAs' => 'S3Key',
+                                                                            'sentAs' => 'Object',
+                                                                            'items' => [ 
+                                                                                    'type' => 'object',
+                                                                                    'sentAs' => 'FilterRule',
+                                                                                    'properties' => [ 
+                                                                                            'Name' => [ 
+                                                                                                    'type' => 'string'
+                                                                                            ],
+
+                                                                                            'Value' => [ 
+                                                                                                    'type' => 'string'
+                                                                                            ]
+                                                                                    ]
+                                                                            ]
+                                                                    ]
+                                                            ]
+                                                    ]
+                                            ],
+                                            'FunctionStageConfigurations' => [ 
+                                                    'type' => 'array',
+                                                    'location' => 'xml',
+                                                    'sentAs' => 'FunctionStageConfiguration',
+                                                    'data' => [ 
+                                                            'xmlFlattened' => true
+                                                    ],
+                                                    'items' => [ 
+                                                            'type' => 'object',
+                                                            'location' => 'xml',
+                                                            'sentAs' => 'FunctionStageConfiguration',
+                                                            'properties' => [ 
+                                                                    'ID' => [ 
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'Id'
+                                                                    ],
+                                                                    'FunctionStage' => [ 
+                                                                            'type' => 'string'
+                                                                    ],
+                                                                    'Event' => [ 
+                                                                            'type' => 'array',
+                                                                            'data' => [ 
+                                                                                    'xmlFlattened' => true
+                                                                            ],
+                                                                            'items' => [ 
+                                                                                    'type' => 'string',
+                                                                                    'sentAs' => 'Event'
+                                                                            ]
+                                                                    ],
+                                                                    'Filter' => [ 
+                                                                            'type' => 'array',
+                                                                            'wrapper' => 'Filter',
+                                                                            'sentAs' => 'Object',
+                                                                            'items' => [ 
+                                                                                    'type' => 'object',
+                                                                                    'sentAs' => 'FilterRule',
+                                                                                    'properties' => [ 
+                                                                                            'Name' => [ 
+                                                                                                    'type' => 'string'
+                                                                                            ],
+
+                                                                                            'Value' => [ 
+                                                                                                    'type' => 'string'
+                                                                                            ]
+                                                                                    ]
+                                                                            ]
+                                                                    ]
+                                                            ]
+                                                    ]
+                                            ],
+                                            'FunctionGraphConfigurations' => [ 
+                                                    'type' => 'array',
+                                                    'location' => 'xml',
+                                                    'sentAs' => 'FunctionGraphConfiguration',
+                                                    'data' => [ 
+                                                            'xmlFlattened' => true
+                                                    ],
+                                                    'items' => [ 
+                                                            'type' => 'object',
+                                                            'location' => 'xml',
+                                                            'sentAs' => 'FunctionGraphConfiguration',
+                                                            'properties' => [ 
+                                                                    'ID' => [ 
+                                                                            'type' => 'string',
+                                                                            'sentAs' => 'Id'
+                                                                    ],
+                                                                    'FunctionGraph' => [ 
+                                                                            'type' => 'string'
+                                                                    ],
+                                                                    'Event' => [ 
+                                                                            'type' => 'array',
+                                                                            'data' => [ 
+                                                                                    'xmlFlattened' => true
+                                                                            ],
+                                                                            'items' => [ 
+                                                                                    'type' => 'string',
+                                                                                    'sentAs' => 'Event'
+                                                                            ]
+                                                                    ],
+                                                                    'Filter' => [ 
+                                                                            'type' => 'array',
+                                                                            'wrapper' => 'Filter',
+                                                                            'sentAs' => 'Object',
                                                                             'items' => [ 
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'FilterRule',
@@ -2119,7 +2299,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -2170,16 +2350,16 @@ class V2RequestResource {
                                             'DeleteMarker' => [ 
                                                     'type' => 'boolean',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-delete-marker'
+                                                    'sentAs' => 'x-obs-delete-marker'
                                             ],
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -2283,7 +2463,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -2316,45 +2496,45 @@ class V2RequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-acl',
+                                            'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'GrantRead' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-read'
+                                            'sentAs' => 'x-obs-grant-read'
                                     ],
                                     'GrantWrite' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-write'
+                                            'sentAs' => 'x-obs-grant-write'
                                     ],
                                     'GrantReadAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-read-acp'
+                                            'sentAs' => 'x-obs-grant-read-acp'
                                     ],
                                     'GrantWriteAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-write-acp'
+                                            'sentAs' => 'x-obs-grant-write-acp'
                                     ],
                                     'GrantFullControl' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-grant-full-control'
+                                            'sentAs' => 'x-obs-grant-full-control'
                                     ],
                                     'Owner' => [ 
                                             'type' => 'object',
                                             'location' => 'xml',
                                             'properties' => [ 
-                                                    'DisplayName' => [ 
-                                                            'type' => 'string'
-                                                    ],
                                                     'ID' => [ 
                                                             'type' => 'string'
                                                     ]
                                             ]
+                                    ],
+                                    'Delivered' => [ 
+                                            'type' => 'boolean'
                                     ],
                                     'Grants' => [ 
                                             'type' => 'array',
@@ -2367,23 +2547,12 @@ class V2RequestResource {
                                                             'Grantee' => [ 
                                                                     'type' => 'object',
                                                                     'properties' => [ 
-                                                                            'DisplayName' => [ 
-                                                                                    'type' => 'string'
-                                                                            ],
                                                                             'ID' => [ 
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'Type' => [ 
-                                                                                    'required' => true,
-                                                                                    'type' => 'string',
-                                                                                    'sentAs' => 'xsi:type',
-                                                                                    'data' => [ 
-                                                                                            'xmlAttribute' => true,
-                                                                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance'
-                                                                                    ]
-                                                                            ],
                                                                             'URI' => [ 
                                                                                     'type' => 'string',
+                                                                                    'sentAs' => 'Canned',
                                                                                     'transform' => 'aclUri'
                                                                             ]
                                                                     ]
@@ -2398,7 +2567,7 @@ class V2RequestResource {
                             'responseParameters' => [ 
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-request-id'
+                                            'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
@@ -2430,13 +2599,14 @@ class V2RequestResource {
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'properties' => [ 
-                                                            'DisplayName' => [ 
-                                                                    'type' => 'string'
-                                                            ],
                                                             'ID' => [ 
                                                                     'type' => 'string'
                                                             ]
                                                     ]
+                                            ],
+                                            'Delivered' => [ 
+                                                    'type' => 'boolean',
+                                                    'location' => 'xml'
                                             ],
                                             'Grants' => [ 
                                                     'type' => 'array',
@@ -2450,14 +2620,12 @@ class V2RequestResource {
                                                                     'Grantee' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
-                                                                                    'DisplayName' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ],
                                                                                     'URI' => [ 
-                                                                                            'type' => 'string'
+                                                                                            'type' => 'string',
+                                                                                            'sentAs' => 'Canned'
                                                                                     ]
                                                                             ]
                                                                     ],
@@ -2469,11 +2637,11 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'VersionId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ]
                                     ]
                             ]
@@ -2510,7 +2678,7 @@ class V2RequestResource {
                                             'sentAs' => 'Days'
                                     ],
                                     'Tier' => [ 
-                                            'wrapper' => 'GlacierJobParameters',
+                                            'wrapper' => 'RestoreJob',
                                             'type' => 'string',
                                             'sentAs' => 'Tier',
                                             'location' => 'xml'
@@ -2519,7 +2687,7 @@ class V2RequestResource {
                             'responseParameters' => [ 
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-request-id'
+                                            'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
@@ -2530,13 +2698,13 @@ class V2RequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-acl',
+                                            'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-storage-class',
+                                            'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ],
                                     'Body' => [ 
@@ -2571,7 +2739,7 @@ class V2RequestResource {
                                     'Metadata' => [ 
                                             'type' => 'object',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-meta-'
+                                            'sentAs' => 'x-obs-meta-'
                                     ],
                                     'SourceFile' => [ 
                                             'type' => 'file',
@@ -2580,26 +2748,31 @@ class V2RequestResource {
                                     'WebsiteRedirectLocation' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-website-redirect-location'
+                                            'sentAs' => 'x-obs-website-redirect-location'
                                     ],
                                     'SseKms' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption'
+                                            'sentAs' => 'x-obs-server-side-encryption'
                                     ],
                                     'SseKmsKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                            'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'Expires' => [
+                                    'SuccessRedirect' => [ 
+                                            'location' => 'header',
+                                            'type' => 'string',
+                                            'sentAs' => 'success-action-redirect'
+                                    ],
+                                    'Expires' => [ 
                                             'location' => 'header',
                                             'type' => 'string',
                                             'sentAs' => 'x-obs-expires'
@@ -2615,31 +2788,31 @@ class V2RequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'StorageClass' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-storage-class'
+                                                    'sentAs' => 'x-obs-storage-class'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -2747,11 +2920,11 @@ class V2RequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -2765,12 +2938,12 @@ class V2RequestResource {
                                             'DeleteMarker' => [ 
                                                     'type' => 'boolean',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-delete-marker'
+                                                    'sentAs' => 'x-obs-delete-marker'
                                             ],
                                             'Expiration' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-expiration'
+                                                    'sentAs' => 'x-obs-expiration'
                                             ],
                                             'LastModified' => [ 
                                                     'type' => 'string',
@@ -2790,7 +2963,7 @@ class V2RequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ],
                                             'CacheControl' => [ 
                                                     'type' => 'string',
@@ -2824,19 +2997,19 @@ class V2RequestResource {
                                             'WebsiteRedirectLocation' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-website-redirect-location'
+                                                    'sentAs' => 'x-obs-website-redirect-location'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'StorageClass' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-storage-class'
+                                                    'sentAs' => 'x-obs-storage-class'
                                             ],
                                             'Restore' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-restore'
+                                                    'sentAs' => 'x-obs-restore'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -2860,24 +3033,34 @@ class V2RequestResource {
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ],
                                             'Metadata' => [ 
                                                     'location' => 'header',
                                                     'type' => 'object',
-                                                    'sentAs' => 'x-amz-meta-'
+                                                    'sentAs' => 'x-obs-meta-'
+                                            ],
+                                            'ObjectType' => [ 
+                                                    'location' => 'header',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'x-obs-object-type'
+                                            ],
+                                            'AppendPosition' => [ 
+                                                    'location' => 'header',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'x-obs-next-append-position'
                                             ]
                                     ]
                             ]
@@ -2889,13 +3072,13 @@ class V2RequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-acl',
+                                            'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-storage-class',
+                                            'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ],
                                     'Bucket' => [ 
@@ -2912,34 +3095,34 @@ class V2RequestResource {
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source'
+                                            'sentAs' => 'x-obs-copy-source'
                                     ],
                                     'CopySourceIfMatch' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-if-match'
+                                            'sentAs' => 'x-obs-copy-source-if-match'
                                     ],
                                     'CopySourceIfModifiedSince' => [ 
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-if-modified-since'
+                                            'sentAs' => 'x-obs-copy-source-if-modified-since'
                                     ],
                                     'CopySourceIfNoneMatch' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-if-none-match'
+                                            'sentAs' => 'x-obs-copy-source-if-none-match'
                                     ],
                                     'CopySourceIfUnmodifiedSince' => [ 
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-if-unmodified-since'
+                                            'sentAs' => 'x-obs-copy-source-if-unmodified-since'
                                     ],
                                     'MetadataDirective' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-metadata-directive'
+                                            'sentAs' => 'x-obs-metadata-directive'
                                     ],
                                     'ContentType' => [ 
                                             'type' => 'string',
@@ -2974,37 +3157,37 @@ class V2RequestResource {
                                     'Metadata' => [ 
                                             'type' => 'object',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-meta-'
+                                            'sentAs' => 'x-obs-meta-'
                                     ],
                                     'WebsiteRedirectLocation' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-website-redirect-location'
+                                            'sentAs' => 'x-obs-website-redirect-location'
                                     ],
                                     'SseKms' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption'
+                                            'sentAs' => 'x-obs-server-side-encryption'
                                     ],
                                     'SseKmsKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                            'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
                                     'CopySourceSseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-algorithm'
                                     ],
                                     'CopySourceSseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3022,32 +3205,32 @@ class V2RequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ],
                                             'CopySourceVersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-copy-source-version-id'
+                                                    'sentAs' => 'x-obs-copy-source-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3083,11 +3266,11 @@ class V2RequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3097,7 +3280,7 @@ class V2RequestResource {
                                             'Expiration' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-expiration'
+                                                    'sentAs' => 'x-obs-expiration'
                                             ],
                                             'LastModified' => [ 
                                                     'type' => 'string',
@@ -3121,20 +3304,20 @@ class V2RequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ],
                                             'WebsiteRedirectLocation' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-website-redirect-location'
+                                                    'sentAs' => 'x-obs-website-redirect-location'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'StorageClass' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-storage-class'
+                                                    'sentAs' => 'x-obs-storage-class'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -3159,28 +3342,38 @@ class V2RequestResource {
                                             ],
                                             'Restore' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-restore'
+                                                    'sentAs' => 'x-obs-restore'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ],
                                             'Metadata' => [ 
                                                     'location' => 'header',
                                                     'type' => 'object',
-                                                    'sentAs' => 'x-amz-meta-'
+                                                    'sentAs' => 'x-obs-meta-'
+                                            ],
+                                            'ObjectType' => [ 
+                                                    'location' => 'header',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'x-obs-object-type'
+                                            ],
+                                            'AppendPosition' => [ 
+                                                    'location' => 'header',
+                                                    'type' => 'string',
+                                                    'sentAs' => 'x-obs-next-append-position'
                                             ]
                                     ]
                             ]
@@ -3193,13 +3386,13 @@ class V2RequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-acl',
+                                            'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-storage-class',
+                                            'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ],
                                     'Bucket' => [ 
@@ -3220,34 +3413,34 @@ class V2RequestResource {
                                     'Metadata' => [ 
                                             'type' => 'object',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-meta-'
+                                            'sentAs' => 'x-obs-meta-'
                                     ],
                                     'WebsiteRedirectLocation' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-website-redirect-location'
+                                            'sentAs' => 'x-obs-website-redirect-location'
                                     ],
                                     'SseKms' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption'
+                                            'sentAs' => 'x-obs-server-side-encryption'
                                     ],
                                     'SseKmsKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                            'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'Expires' => [
-                                        'location' => 'header',
-                                        'type' => 'string',
-                                        'sentAs' => 'x-obs-expires'
+                                    'Expires' => [ 
+                                            'location' => 'header',
+                                            'type' => 'string',
+                                            'sentAs' => 'x-obs-expires'
                                     ]
                             ],
                             'responseParameters' => [ 
@@ -3268,23 +3461,23 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3391,9 +3584,6 @@ class V2RequestResource {
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
-                                                                                    'DisplayName' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -3403,9 +3593,6 @@ class V2RequestResource {
                                                                             'type' => 'object',
                                                                             'properties' => [ 
                                                                                     'ID' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
-                                                                                    'DisplayName' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -3431,7 +3618,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -3462,7 +3649,7 @@ class V2RequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -3521,11 +3708,11 @@ class V2RequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3538,23 +3725,23 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3631,27 +3818,27 @@ class V2RequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-version-id'
+                                                    'sentAs' => 'x-obs-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3751,9 +3938,6 @@ class V2RequestResource {
                                                     'properties' => [ 
                                                             'ID' => [ 
                                                                     'type' => 'string'
-                                                            ],
-                                                            'DisplayName' => [ 
-                                                                    'type' => 'string'
                                                             ]
                                                     ]
                                             ],
@@ -3761,9 +3945,6 @@ class V2RequestResource {
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'properties' => [ 
-                                                            'DisplayName' => [ 
-                                                                    'type' => 'string'
-                                                            ],
                                                             'ID' => [ 
                                                                     'type' => 'string'
                                                             ]
@@ -3775,7 +3956,7 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
@@ -3793,12 +3974,12 @@ class V2RequestResource {
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source'
+                                            'sentAs' => 'x-obs-copy-source'
                                     ],
                                     'CopySourceRange' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-range'
+                                            'sentAs' => 'x-obs-copy-source-range'
                                     ],
                                     'Key' => [ 
                                             'required' => true,
@@ -3819,20 +4000,20 @@ class V2RequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
                                     'CopySourceSseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-algorithm'
                                     ],
                                     'CopySourceSseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3849,23 +4030,23 @@ class V2RequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-request-id'
+                                                    'sentAs' => 'x-obs-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption'
+                                                    'sentAs' => 'x-obs-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3885,6 +4066,6 @@ class V2RequestResource {
                     'setBucketLifecycle' => 'setBucketLifecycleConfiguration',
                     'getBucketLifecycle' => 'getBucketLifecycleConfiguration',
                     'deleteBucketLifecycle' => 'deleteBucketLifecycleConfiguration'
-            ]            
+            ]
     ];
 }

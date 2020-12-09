@@ -15,11 +15,9 @@
  *
  */
 
-namespace Obs\Internal\Signature;
+namespace ObsV3\Internal\Common;
 
-use Obs\Internal\Common\Model;
-
-interface SignatureInterface
+interface ToArrayInterface
 {
-	function doAuth(array &$requestConfig, array &$params, Model $model);
+	public function toArray();
 }

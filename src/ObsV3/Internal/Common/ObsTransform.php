@@ -15,9 +15,9 @@
  *
  */
 
-namespace Obs\Internal\Common;
+namespace ObsV3\Internal\Common;
 
-use Obs\ObsClient;
+use ObsV3\ObsClient;
 
 class ObsTransform implements ITransform {
     private static $instance;

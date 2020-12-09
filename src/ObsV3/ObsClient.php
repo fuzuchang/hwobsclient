@@ -15,12 +15,12 @@
  *
  */
 
-namespace Obs;
+namespace ObsV3;
 
-use Obs\Log\ObsLog;
-use Obs\Internal\Common\SdkCurlFactory;
-use Obs\Internal\Common\SdkStreamHandler;
-use Obs\Internal\Common\Model;
+use ObsV3\Log\ObsLog;
+use ObsV3\Internal\Common\SdkCurlFactory;
+use ObsV3\Internal\Common\SdkStreamHandler;
+use ObsV3\Internal\Common\Model;
 use Monolog\Logger;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
@@ -28,7 +28,7 @@ use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Handler\CurlMultiHandler;
 use GuzzleHttp\Handler\Proxy;
 use GuzzleHttp\Promise\Promise;
-use Obs\Internal\Resource\Constants;
+use ObsV3\Internal\Resource\Constants;
 
 
 define('DEBUG', Logger::DEBUG);

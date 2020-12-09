@@ -14,10 +14,10 @@
  *
  */
 
-namespace Obs\Internal\Common;
+namespace ObsV3\Internal\Common;
 
-use Obs\ObsClient;
-use Obs\Internal\Resource\V2Constants;
+use ObsV3\ObsClient;
+use ObsV3\Internal\Resource\V2Constants;
 
 class V2Transform implements ITransform{
     private static $instance;

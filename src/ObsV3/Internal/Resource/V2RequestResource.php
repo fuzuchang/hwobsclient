@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2019 Huawei Technologies Co.,Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -15,9 +14,9 @@
  *
  */
 
-namespace Obs\Internal\Resource;
+namespace ObsV3\Internal\Resource;
 
-class OBSRequestResource {
+class V2RequestResource {
     public static $RESOURCE_ARRAY = [ 
             'operations' => [ 
                     'createBucket' => [ 
@@ -31,7 +30,7 @@ class OBSRequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-acl',
+                                            'sentAs' => 'x-amz-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'Bucket' => [ 
@@ -41,30 +40,36 @@ class OBSRequestResource {
                                     ],
                                     'LocationConstraint' => [ 
                                             'type' => 'string',
-                                            'location' => 'xml',
-                                            'sentAs' => 'Location'
+                                            'location' => 'xml'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-storage-class',
+                                            'sentAs' => 'x-default-storage-class',
                                             'transform' => 'storageClass'
                                     ]
                             ],
                             'responseParameters' => [ 
                                     'Location' => [ 
                                             'type' => 'string',
-                                            'location' => 'header'
+                                            'location' => 'header',
                                     ],
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-request-id'
+                                            'sentAs' => 'x-amz-request-id'
                                     ]
                             ]
                     ],
 
                     'listBuckets' => [ 
                             'httpMethod' => 'GET',
+                            'requestParameters' => [
+                                'QueryLocation' => [
+                                    'type' => 'boolean',
+                                    'location' => 'header',
+                                    'sentAs' => 'x-amz-location',
+                                ],
+                            ],
                             'responseParameters' => [ 
                                     'Buckets' => [ 
                                             'type' => 'array',
@@ -81,8 +86,8 @@ class OBSRequestResource {
                                                             'CreationDate' => [ 
                                                                     'type' => 'string'
                                                             ],
-                                                            'Location' => [ 
-                                                                    'type' => 'string'
+                                                            'Location' => [
+                                                                'type' => 'string'
                                                             ]
                                                     ]
                                             ]
@@ -91,6 +96,9 @@ class OBSRequestResource {
                                             'type' => 'object',
                                             'location' => 'xml',
                                             'properties' => [ 
+                                                    'DisplayName' => [ 
+                                                            'type' => 'string'
+                                                    ],
                                                     'ID' => [ 
                                                             'type' => 'string'
                                                     ]
@@ -98,7 +106,7 @@ class OBSRequestResource {
                                     ],
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-request-id'
+                                            'sentAs' => 'x-amz-request-id'
                                     ]
                             ]
                     ],
@@ -117,7 +125,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -193,12 +201,12 @@ class OBSRequestResource {
                                                                     'StorageClass' => [ 
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Type' => [ 
-                                                                            'type' => 'string'
-                                                                    ],
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
+                                                                                    'DisplayName' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -241,11 +249,11 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'Location' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-bucket-location'
+                                                    'sentAs' => 'x-amz-bucket-region'
                                             ]
                                     ]
                             ]
@@ -342,12 +350,12 @@ class OBSRequestResource {
                                                                     'LastModified' => [ 
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Type' => [ 
-                                                                            'type' => 'string'
-                                                                    ],
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
+                                                                                    'DisplayName' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -371,6 +379,9 @@ class OBSRequestResource {
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
+                                                                                    'DisplayName' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -425,11 +436,11 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'Location' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-bucket-location'
+                                                    'sentAs' => 'x-amz-bucket-region'
                                             ]
                                     ]
                             ]
@@ -457,16 +468,16 @@ class OBSRequestResource {
                             'responseParameters' => [ 
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-request-id'
+                                            'sentAs' => 'x-amz-request-id'
                                     ],
                                     'StorageClass' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-storage-class'
+                                            'sentAs' => 'x-default-storage-class'
                                     ],
 
                                     'Location' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-bucket-location'
+                                            'sentAs' => 'x-amz-bucket-region'
                                     ],
 
                                     'AllowOrigin' => [ 
@@ -508,11 +519,12 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'Location' => [ 
                                                     'type' => 'string',
+                                                    'sentAs' => 'LocationConstraint',
                                                     'location' => 'xml'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -542,7 +554,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -572,7 +584,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -598,7 +610,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -606,10 +618,10 @@ class OBSRequestResource {
 
                     'setBucketStoragePolicy' => [ 
                             'httpMethod' => 'PUT',
-                            'specialParam' => 'storageClass',
+                            'specialParam' => 'storagePolicy',
                             'data' => [ 
                                     'xmlRoot' => [ 
-                                            'name' => 'StorageClass'
+                                            'name' => 'StoragePolicy'
                                     ]
                             ],
                             'requestParameters' => [ 
@@ -622,10 +634,8 @@ class OBSRequestResource {
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'xml',
-                                            'transform' => 'storageClass',
-                                            'data' => [ 
-                                                    'xmlFlattened' => true
-                                            ]
+                                            'sentAs' => 'DefaultStorageClass',
+                                            'transform' => 'storageClass'
                                     ]
                             ],
                             'responseParameters' => [ 
@@ -633,7 +643,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -654,11 +664,12 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'StorageClass' => [ 
                                                     'type' => 'string',
-                                                    'location' => 'xml'
+                                                    'location' => 'xml',
+                                                    'sentAs' => 'DefaultStorageClass'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -681,48 +692,41 @@ class OBSRequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-acl',
+                                            'sentAs' => 'x-amz-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'GrantRead' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-read'
+                                            'sentAs' => 'x-amz-grant-read'
                                     ],
                                     'GrantWrite' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-write'
+                                            'sentAs' => 'x-amz-grant-write'
                                     ],
                                     'GrantReadAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-read-acp'
+                                            'sentAs' => 'x-amz-grant-read-acp'
                                     ],
                                     'GrantWriteAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-write-acp'
+                                            'sentAs' => 'x-amz-grant-write-acp'
                                     ],
                                     'GrantFullControl' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-full-control'
-                                    ],
-                                    'GrantDeliveryRead' => [ 
-                                            'type' => 'string',
-                                            'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-read-delivered'
-                                    ],
-                                    'GrantDeliveryFullControl' => [ 
-                                            'type' => 'string',
-                                            'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-full-control-delivered'
+                                            'sentAs' => 'x-amz-grant-full-control'
                                     ],
                                     'Owner' => [ 
                                             'type' => 'object',
                                             'location' => 'xml',
                                             'properties' => [ 
+                                                    'DisplayName' => [ 
+                                                            'type' => 'string'
+                                                    ],
                                                     'ID' => [ 
                                                             'type' => 'string'
                                                     ]
@@ -739,21 +743,29 @@ class OBSRequestResource {
                                                             'Grantee' => [ 
                                                                     'type' => 'object',
                                                                     'properties' => [ 
+                                                                            'DisplayName' => [ 
+                                                                                    'type' => 'string'
+                                                                            ],
                                                                             'ID' => [ 
                                                                                     'type' => 'string'
                                                                             ],
+                                                                            'Type' => [ 
+                                                                                    'required' => true,
+                                                                                    'type' => 'string',
+                                                                                    'sentAs' => 'xsi:type',
+                                                                                    'data' => [ 
+                                                                                            'xmlAttribute' => true,
+                                                                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance'
+                                                                                    ]
+                                                                            ],
                                                                             'URI' => [ 
                                                                                     'type' => 'string',
-                                                                                    'sentAs' => 'Canned',
                                                                                     'transform' => 'aclUri'
                                                                             ]
                                                                     ]
                                                             ],
                                                             'Permission' => [ 
                                                                     'type' => 'string'
-                                                            ],
-                                                            'Delivered' => [
-                                                                    'type' => 'boolean'
                                                             ]
                                                     ]
                                             ]
@@ -764,7 +776,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -785,12 +797,15 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'Owner' => [ 
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'properties' => [ 
+                                                            'DisplayName' => [ 
+                                                                    'type' => 'string'
+                                                            ],
                                                             'ID' => [ 
                                                                     'type' => 'string'
                                                             ]
@@ -808,20 +823,19 @@ class OBSRequestResource {
                                                                     'Grantee' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
+                                                                                    'DisplayName' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ],
                                                                                     'URI' => [ 
-                                                                                            'type' => 'string',
-                                                                                            'sentAs' => 'Canned'
+                                                                                            'type' => 'string'
                                                                                     ]
                                                                             ]
                                                                     ],
                                                                     'Permission' => [ 
                                                                             'type' => 'string'
-                                                                    ],
-                                                                    'Delivered' => [ 
-                                                                            'type' => 'boolean'
                                                                     ]
                                                             ]
                                                     ]
@@ -845,10 +859,6 @@ class OBSRequestResource {
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Agency' => [
-                                            'type' => 'string',
-                                            'location' => 'xml'
-                                    ],
                                     'LoggingEnabled' => [ 
                                             'type' => 'object',
                                             'location' => 'xml',
@@ -868,12 +878,23 @@ class OBSRequestResource {
                                                                             'Grantee' => [ 
                                                                                     'type' => 'object',
                                                                                     'properties' => [ 
+                                                                                            'DisplayName' => [ 
+                                                                                                    'type' => 'string'
+                                                                                            ],
                                                                                             'ID' => [ 
                                                                                                     'type' => 'string'
                                                                                             ],
+                                                                                            'Type' => [ 
+                                                                                                    'required' => true,
+                                                                                                    'type' => 'string',
+                                                                                                    'sentAs' => 'xsi:type',
+                                                                                                    'data' => [ 
+                                                                                                            'xmlAttribute' => true,
+                                                                                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance'
+                                                                                                    ]
+                                                                                            ],
                                                                                             'URI' => [ 
                                                                                                     'type' => 'string',
-                                                                                                    'sentAs' => 'Canned',
                                                                                                     'transform' => 'aclUri'
                                                                                             ]
                                                                                     ]
@@ -892,7 +913,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -910,11 +931,7 @@ class OBSRequestResource {
                             ],
                             'responseParameters' => [ 
                                     'type' => 'object',
-                                    'properties' => [
-                                            'Agency' => [
-                                                    'type' => 'string',
-                                                    'location' => 'xml'
-                                            ],
+                                    'properties' => [ 
                                             'LoggingEnabled' => [ 
                                                     'type' => 'object',
                                                     'location' => 'xml',
@@ -933,12 +950,14 @@ class OBSRequestResource {
                                                                                     'Grantee' => [ 
                                                                                             'type' => 'object',
                                                                                             'properties' => [ 
+                                                                                                    'DisplayName' => [ 
+                                                                                                            'type' => 'string'
+                                                                                                    ],
                                                                                                     'ID' => [ 
                                                                                                             'type' => 'string'
                                                                                                     ],
                                                                                                     'URI' => [ 
-                                                                                                            'type' => 'string',
-                                                                                                            'sentAs' => 'Canned'
+                                                                                                            'type' => 'string'
                                                                                                     ]
                                                                                             ]
                                                                                     ],
@@ -955,7 +974,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -981,7 +1000,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1006,7 +1025,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1027,7 +1046,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1146,7 +1165,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1167,7 +1186,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'Rules' => [ 
                                                     'type' => 'array',
@@ -1273,7 +1292,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1374,7 +1393,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1395,7 +1414,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'RedirectAllRequestsTo' => [ 
                                                     'type' => 'object',
@@ -1488,7 +1507,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1518,7 +1537,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1539,7 +1558,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'Status' => [ 
                                                     'type' => 'string',
@@ -1633,7 +1652,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1654,7 +1673,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'CorsRules' => [ 
                                                     'type' => 'array',
@@ -1734,7 +1753,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1776,7 +1795,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -1844,7 +1863,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1865,7 +1884,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'Tags' => [ 
                                                     'type' => 'array',
@@ -1903,7 +1922,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -1924,6 +1943,7 @@ class OBSRequestResource {
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
+
                                     'TopicConfigurations' => [ 
                                             'type' => 'array',
                                             'location' => 'xml',
@@ -1940,138 +1960,38 @@ class OBSRequestResource {
                                                                     'type' => 'string',
                                                                     'sentAs' => 'Id'
                                                             ],
-                                                            'Filter' => [
-                                                                'type' => 'array',
-                                                                'wrapper' => 'Filter',
-                                                                'sentAs' => 'Object',
-                                                                'items' => [
-                                                                    'type' => 'object',
-                                                                    'sentAs' => 'FilterRule',
-                                                                    'properties' => [
-                                                                        'Name' => [
-                                                                            'type' => 'string'
-                                                                        ],
-                                                                        
-                                                                        'Value' => [
-                                                                            'type' => 'string'
-                                                                        ]
+                                                            'Filter' => [ 
+                                                                    'type' => 'array',
+                                                                    'wrapper' => 'Filter',
+                                                                    'sentAs' => 'S3Key',
+                                                                    'items' => [ 
+                                                                            'type' => 'object',
+                                                                            'sentAs' => 'FilterRule',
+                                                                            'properties' => [ 
+                                                                                    'Name' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
+
+                                                                                    'Value' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ]
+                                                                            ]
                                                                     ]
+                                                            ],
+                                                            'Topic' => [
+                                                                'type' => 'string'
+                                                            ],
+                                                            'Event' => [
+                                                                'type' => 'array',
+                                                                'data' => [
+                                                                    'xmlFlattened' => true
+                                                                ],
+                                                                'items' => [
+                                                                    'type' => 'string',
+                                                                    'sentAs' => 'Event',
+                                                                    'transform' => 'event'
                                                                 ]
                                                             ],
-                                                            'Topic' => [ 
-                                                                    'type' => 'string'
-                                                            ],
-                                                            'Event' => [ 
-                                                                    'type' => 'array',
-                                                                    'data' => [ 
-                                                                            'xmlFlattened' => true
-                                                                    ],
-                                                                    'items' => [ 
-                                                                            'type' => 'string',
-                                                                            'sentAs' => 'Event',
-                                                                            'transform' => 'event'
-                                                                    ]
-                                                            ],
-                                                    ]
-                                            ]
-                                    ],
-                                    'FunctionStageConfigurations' => [ 
-                                            'type' => 'array',
-                                            'location' => 'xml',
-                                            'sentAs' => 'FunctionStageConfiguration',
-                                            'data' => [ 
-                                                    'xmlFlattened' => true
-                                            ],
-                                            'items' => [ 
-                                                    'type' => 'object',
-                                                    'location' => 'xml',
-                                                    'sentAs' => 'FunctionStageConfiguration',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
-                                                                    'type' => 'string',
-                                                                    'sentAs' => 'Id'
-                                                            ],
-                                                            'FunctionStage' => [ 
-                                                                    'type' => 'string'
-                                                            ],
-                                                            'Event' => [ 
-                                                                    'type' => 'array',
-                                                                    'data' => [ 
-                                                                            'xmlFlattened' => true
-                                                                    ],
-                                                                    'items' => [ 
-                                                                            'type' => 'string',
-                                                                            'sentAs' => 'Event'
-                                                                    ]
-                                                            ],
-                                                            'Filter' => [ 
-                                                                    'type' => 'array',
-                                                                    'wrapper' => 'Filter',
-                                                                    'sentAs' => 'Object',
-                                                                    'items' => [ 
-                                                                            'type' => 'object',
-                                                                            'sentAs' => 'FilterRule',
-                                                                            'properties' => [ 
-                                                                                    'Name' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
-
-                                                                                    'Value' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ]
-                                                                            ]
-                                                                    ]
-                                                            ]
-                                                    ]
-                                            ]
-                                    ],
-                                    'FunctionGraphConfigurations' => [ 
-                                            'type' => 'array',
-                                            'location' => 'xml',
-                                            'sentAs' => 'FunctionGraphConfiguration',
-                                            'data' => [ 
-                                                    'xmlFlattened' => true
-                                            ],
-                                            'items' => [ 
-                                                    'type' => 'object',
-                                                    'location' => 'xml',
-                                                    'sentAs' => 'FunctionGraphConfiguration',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
-                                                                    'type' => 'string',
-                                                                    'sentAs' => 'Id'
-                                                            ],
-                                                            'FunctionGraph' => [ 
-                                                                    'type' => 'string'
-                                                            ],
-                                                            'Event' => [ 
-                                                                    'type' => 'array',
-                                                                    'data' => [ 
-                                                                            'xmlFlattened' => true
-                                                                    ],
-                                                                    'items' => [ 
-                                                                            'type' => 'string',
-                                                                            'sentAs' => 'Event'
-                                                                    ]
-                                                            ],
-                                                            'Filter' => [ 
-                                                                    'type' => 'array',
-                                                                    'wrapper' => 'Filter',
-                                                                    'sentAs' => 'Object',
-                                                                    'items' => [ 
-                                                                            'type' => 'object',
-                                                                            'sentAs' => 'FilterRule',
-                                                                            'properties' => [ 
-                                                                                    'Name' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ],
-
-                                                                                    'Value' => [ 
-                                                                                            'type' => 'string'
-                                                                                    ]
-                                                                            ]
-                                                                    ]
-                                                            ]
                                                     ]
                                             ]
                                     ]
@@ -2081,7 +2001,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -2102,7 +2022,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'TopicConfigurations' => [ 
                                                     'type' => 'array',
@@ -2136,107 +2056,7 @@ class OBSRequestResource {
                                                                     'Filter' => [ 
                                                                             'type' => 'array',
                                                                             'wrapper' => 'Filter',
-                                                                            'sentAs' => 'Object',
-                                                                            'items' => [ 
-                                                                                    'type' => 'object',
-                                                                                    'sentAs' => 'FilterRule',
-                                                                                    'properties' => [ 
-                                                                                            'Name' => [ 
-                                                                                                    'type' => 'string'
-                                                                                            ],
-
-                                                                                            'Value' => [ 
-                                                                                                    'type' => 'string'
-                                                                                            ]
-                                                                                    ]
-                                                                            ]
-                                                                    ]
-                                                            ]
-                                                    ]
-                                            ],
-                                            'FunctionStageConfigurations' => [ 
-                                                    'type' => 'array',
-                                                    'location' => 'xml',
-                                                    'sentAs' => 'FunctionStageConfiguration',
-                                                    'data' => [ 
-                                                            'xmlFlattened' => true
-                                                    ],
-                                                    'items' => [ 
-                                                            'type' => 'object',
-                                                            'location' => 'xml',
-                                                            'sentAs' => 'FunctionStageConfiguration',
-                                                            'properties' => [ 
-                                                                    'ID' => [ 
-                                                                            'type' => 'string',
-                                                                            'sentAs' => 'Id'
-                                                                    ],
-                                                                    'FunctionStage' => [ 
-                                                                            'type' => 'string'
-                                                                    ],
-                                                                    'Event' => [ 
-                                                                            'type' => 'array',
-                                                                            'data' => [ 
-                                                                                    'xmlFlattened' => true
-                                                                            ],
-                                                                            'items' => [ 
-                                                                                    'type' => 'string',
-                                                                                    'sentAs' => 'Event'
-                                                                            ]
-                                                                    ],
-                                                                    'Filter' => [ 
-                                                                            'type' => 'array',
-                                                                            'wrapper' => 'Filter',
-                                                                            'sentAs' => 'Object',
-                                                                            'items' => [ 
-                                                                                    'type' => 'object',
-                                                                                    'sentAs' => 'FilterRule',
-                                                                                    'properties' => [ 
-                                                                                            'Name' => [ 
-                                                                                                    'type' => 'string'
-                                                                                            ],
-
-                                                                                            'Value' => [ 
-                                                                                                    'type' => 'string'
-                                                                                            ]
-                                                                                    ]
-                                                                            ]
-                                                                    ]
-                                                            ]
-                                                    ]
-                                            ],
-                                            'FunctionGraphConfigurations' => [ 
-                                                    'type' => 'array',
-                                                    'location' => 'xml',
-                                                    'sentAs' => 'FunctionGraphConfiguration',
-                                                    'data' => [ 
-                                                            'xmlFlattened' => true
-                                                    ],
-                                                    'items' => [ 
-                                                            'type' => 'object',
-                                                            'location' => 'xml',
-                                                            'sentAs' => 'FunctionGraphConfiguration',
-                                                            'properties' => [ 
-                                                                    'ID' => [ 
-                                                                            'type' => 'string',
-                                                                            'sentAs' => 'Id'
-                                                                    ],
-                                                                    'FunctionGraph' => [ 
-                                                                            'type' => 'string'
-                                                                    ],
-                                                                    'Event' => [ 
-                                                                            'type' => 'array',
-                                                                            'data' => [ 
-                                                                                    'xmlFlattened' => true
-                                                                            ],
-                                                                            'items' => [ 
-                                                                                    'type' => 'string',
-                                                                                    'sentAs' => 'Event'
-                                                                            ]
-                                                                    ],
-                                                                    'Filter' => [ 
-                                                                            'type' => 'array',
-                                                                            'wrapper' => 'Filter',
-                                                                            'sentAs' => 'Object',
+                                                                            'sentAs' => 'S3Key',
                                                                             'items' => [ 
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'FilterRule',
@@ -2299,7 +2119,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -2350,16 +2170,16 @@ class OBSRequestResource {
                                             'DeleteMarker' => [ 
                                                     'type' => 'boolean',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-delete-marker'
+                                                    'sentAs' => 'x-amz-delete-marker'
                                             ],
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -2463,7 +2283,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -2496,45 +2316,45 @@ class OBSRequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-acl',
+                                            'sentAs' => 'x-amz-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'GrantRead' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-read'
+                                            'sentAs' => 'x-amz-grant-read'
                                     ],
                                     'GrantWrite' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-write'
+                                            'sentAs' => 'x-amz-grant-write'
                                     ],
                                     'GrantReadAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-read-acp'
+                                            'sentAs' => 'x-amz-grant-read-acp'
                                     ],
                                     'GrantWriteAcp' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-write-acp'
+                                            'sentAs' => 'x-amz-grant-write-acp'
                                     ],
                                     'GrantFullControl' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-grant-full-control'
+                                            'sentAs' => 'x-amz-grant-full-control'
                                     ],
                                     'Owner' => [ 
                                             'type' => 'object',
                                             'location' => 'xml',
                                             'properties' => [ 
+                                                    'DisplayName' => [ 
+                                                            'type' => 'string'
+                                                    ],
                                                     'ID' => [ 
                                                             'type' => 'string'
                                                     ]
                                             ]
-                                    ],
-                                    'Delivered' => [ 
-                                            'type' => 'boolean'
                                     ],
                                     'Grants' => [ 
                                             'type' => 'array',
@@ -2547,12 +2367,23 @@ class OBSRequestResource {
                                                             'Grantee' => [ 
                                                                     'type' => 'object',
                                                                     'properties' => [ 
+                                                                            'DisplayName' => [ 
+                                                                                    'type' => 'string'
+                                                                            ],
                                                                             'ID' => [ 
                                                                                     'type' => 'string'
                                                                             ],
+                                                                            'Type' => [ 
+                                                                                    'required' => true,
+                                                                                    'type' => 'string',
+                                                                                    'sentAs' => 'xsi:type',
+                                                                                    'data' => [ 
+                                                                                            'xmlAttribute' => true,
+                                                                                            'xmlNamespace' => 'http://www.w3.org/2001/XMLSchema-instance'
+                                                                                    ]
+                                                                            ],
                                                                             'URI' => [ 
                                                                                     'type' => 'string',
-                                                                                    'sentAs' => 'Canned',
                                                                                     'transform' => 'aclUri'
                                                                             ]
                                                                     ]
@@ -2567,7 +2398,7 @@ class OBSRequestResource {
                             'responseParameters' => [ 
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-request-id'
+                                            'sentAs' => 'x-amz-request-id'
                                     ]
                             ]
                     ],
@@ -2599,14 +2430,13 @@ class OBSRequestResource {
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'properties' => [ 
+                                                            'DisplayName' => [ 
+                                                                    'type' => 'string'
+                                                            ],
                                                             'ID' => [ 
                                                                     'type' => 'string'
                                                             ]
                                                     ]
-                                            ],
-                                            'Delivered' => [ 
-                                                    'type' => 'boolean',
-                                                    'location' => 'xml'
                                             ],
                                             'Grants' => [ 
                                                     'type' => 'array',
@@ -2620,12 +2450,14 @@ class OBSRequestResource {
                                                                     'Grantee' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
+                                                                                    'DisplayName' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ],
                                                                                     'URI' => [ 
-                                                                                            'type' => 'string',
-                                                                                            'sentAs' => 'Canned'
+                                                                                            'type' => 'string'
                                                                                     ]
                                                                             ]
                                                                     ],
@@ -2637,11 +2469,11 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'VersionId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ]
                                     ]
                             ]
@@ -2678,7 +2510,7 @@ class OBSRequestResource {
                                             'sentAs' => 'Days'
                                     ],
                                     'Tier' => [ 
-                                            'wrapper' => 'RestoreJob',
+                                            'wrapper' => 'GlacierJobParameters',
                                             'type' => 'string',
                                             'sentAs' => 'Tier',
                                             'location' => 'xml'
@@ -2687,7 +2519,7 @@ class OBSRequestResource {
                             'responseParameters' => [ 
                                     'RequestId' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-request-id'
+                                            'sentAs' => 'x-amz-request-id'
                                     ]
                             ]
                     ],
@@ -2698,13 +2530,13 @@ class OBSRequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-acl',
+                                            'sentAs' => 'x-amz-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-storage-class',
+                                            'sentAs' => 'x-amz-storage-class',
                                             'transform' => 'storageClass'
                                     ],
                                     'Body' => [ 
@@ -2739,7 +2571,7 @@ class OBSRequestResource {
                                     'Metadata' => [ 
                                             'type' => 'object',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-meta-'
+                                            'sentAs' => 'x-amz-meta-'
                                     ],
                                     'SourceFile' => [ 
                                             'type' => 'file',
@@ -2748,31 +2580,26 @@ class OBSRequestResource {
                                     'WebsiteRedirectLocation' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-website-redirect-location'
+                                            'sentAs' => 'x-amz-website-redirect-location'
                                     ],
                                     'SseKms' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption'
+                                            'sentAs' => 'x-amz-server-side-encryption'
                                     ],
                                     'SseKmsKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                            'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'SuccessRedirect' => [ 
-                                            'location' => 'header',
-                                            'type' => 'string',
-                                            'sentAs' => 'success-action-redirect'
-                                    ],
-                                    'Expires' => [ 
+                                    'Expires' => [
                                             'location' => 'header',
                                             'type' => 'string',
                                             'sentAs' => 'x-obs-expires'
@@ -2788,31 +2615,31 @@ class OBSRequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'StorageClass' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-storage-class'
+                                                    'sentAs' => 'x-amz-storage-class'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -2920,11 +2747,11 @@ class OBSRequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -2938,12 +2765,12 @@ class OBSRequestResource {
                                             'DeleteMarker' => [ 
                                                     'type' => 'boolean',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-delete-marker'
+                                                    'sentAs' => 'x-amz-delete-marker'
                                             ],
                                             'Expiration' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-expiration'
+                                                    'sentAs' => 'x-amz-expiration'
                                             ],
                                             'LastModified' => [ 
                                                     'type' => 'string',
@@ -2963,7 +2790,7 @@ class OBSRequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ],
                                             'CacheControl' => [ 
                                                     'type' => 'string',
@@ -2997,19 +2824,19 @@ class OBSRequestResource {
                                             'WebsiteRedirectLocation' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-website-redirect-location'
+                                                    'sentAs' => 'x-amz-website-redirect-location'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'StorageClass' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-storage-class'
+                                                    'sentAs' => 'x-amz-storage-class'
                                             ],
                                             'Restore' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-restore'
+                                                    'sentAs' => 'x-amz-restore'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -3033,34 +2860,24 @@ class OBSRequestResource {
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ],
                                             'Metadata' => [ 
                                                     'location' => 'header',
                                                     'type' => 'object',
-                                                    'sentAs' => 'x-obs-meta-'
-                                            ],
-                                            'ObjectType' => [ 
-                                                    'location' => 'header',
-                                                    'type' => 'string',
-                                                    'sentAs' => 'x-obs-object-type'
-                                            ],
-                                            'AppendPosition' => [ 
-                                                    'location' => 'header',
-                                                    'type' => 'string',
-                                                    'sentAs' => 'x-obs-next-append-position'
+                                                    'sentAs' => 'x-amz-meta-'
                                             ]
                                     ]
                             ]
@@ -3072,13 +2889,13 @@ class OBSRequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-acl',
+                                            'sentAs' => 'x-amz-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-storage-class',
+                                            'sentAs' => 'x-amz-storage-class',
                                             'transform' => 'storageClass'
                                     ],
                                     'Bucket' => [ 
@@ -3095,34 +2912,34 @@ class OBSRequestResource {
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source'
+                                            'sentAs' => 'x-amz-copy-source'
                                     ],
                                     'CopySourceIfMatch' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-if-match'
+                                            'sentAs' => 'x-amz-copy-source-if-match'
                                     ],
                                     'CopySourceIfModifiedSince' => [ 
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-if-modified-since'
+                                            'sentAs' => 'x-amz-copy-source-if-modified-since'
                                     ],
                                     'CopySourceIfNoneMatch' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-if-none-match'
+                                            'sentAs' => 'x-amz-copy-source-if-none-match'
                                     ],
                                     'CopySourceIfUnmodifiedSince' => [ 
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-if-unmodified-since'
+                                            'sentAs' => 'x-amz-copy-source-if-unmodified-since'
                                     ],
                                     'MetadataDirective' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-metadata-directive'
+                                            'sentAs' => 'x-amz-metadata-directive'
                                     ],
                                     'ContentType' => [ 
                                             'type' => 'string',
@@ -3157,37 +2974,37 @@ class OBSRequestResource {
                                     'Metadata' => [ 
                                             'type' => 'object',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-meta-'
+                                            'sentAs' => 'x-amz-meta-'
                                     ],
                                     'WebsiteRedirectLocation' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-website-redirect-location'
+                                            'sentAs' => 'x-amz-website-redirect-location'
                                     ],
                                     'SseKms' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption'
+                                            'sentAs' => 'x-amz-server-side-encryption'
                                     ],
                                     'SseKmsKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                            'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
                                     'CopySourceSseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-algorithm'
                                     ],
                                     'CopySourceSseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3205,32 +3022,32 @@ class OBSRequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ],
                                             'CopySourceVersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-copy-source-version-id'
+                                                    'sentAs' => 'x-amz-copy-source-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3266,11 +3083,11 @@ class OBSRequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3280,7 +3097,7 @@ class OBSRequestResource {
                                             'Expiration' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-expiration'
+                                                    'sentAs' => 'x-amz-expiration'
                                             ],
                                             'LastModified' => [ 
                                                     'type' => 'string',
@@ -3304,20 +3121,20 @@ class OBSRequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ],
                                             'WebsiteRedirectLocation' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-website-redirect-location'
+                                                    'sentAs' => 'x-amz-website-redirect-location'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'StorageClass' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-storage-class'
+                                                    'sentAs' => 'x-amz-storage-class'
                                             ],
                                             'AllowOrigin' => [ 
                                                     'location' => 'header',
@@ -3342,38 +3159,28 @@ class OBSRequestResource {
                                             ],
                                             'Restore' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-restore'
+                                                    'sentAs' => 'x-amz-restore'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ],
                                             'Metadata' => [ 
                                                     'location' => 'header',
                                                     'type' => 'object',
-                                                    'sentAs' => 'x-obs-meta-'
-                                            ],
-                                            'ObjectType' => [ 
-                                                    'location' => 'header',
-                                                    'type' => 'string',
-                                                    'sentAs' => 'x-obs-object-type'
-                                            ],
-                                            'AppendPosition' => [ 
-                                                    'location' => 'header',
-                                                    'type' => 'string',
-                                                    'sentAs' => 'x-obs-next-append-position'
+                                                    'sentAs' => 'x-amz-meta-'
                                             ]
                                     ]
                             ]
@@ -3386,13 +3193,13 @@ class OBSRequestResource {
                                     'ACL' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-acl',
+                                            'sentAs' => 'x-amz-acl',
                                             'transform' => 'aclHeader'
                                     ],
                                     'StorageClass' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-storage-class',
+                                            'sentAs' => 'x-amz-storage-class',
                                             'transform' => 'storageClass'
                                     ],
                                     'Bucket' => [ 
@@ -3413,34 +3220,34 @@ class OBSRequestResource {
                                     'Metadata' => [ 
                                             'type' => 'object',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-meta-'
+                                            'sentAs' => 'x-amz-meta-'
                                     ],
                                     'WebsiteRedirectLocation' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-website-redirect-location'
+                                            'sentAs' => 'x-amz-website-redirect-location'
                                     ],
                                     'SseKms' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption'
+                                            'sentAs' => 'x-amz-server-side-encryption'
                                     ],
                                     'SseKmsKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                            'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'Expires' => [ 
-                                            'location' => 'header',
-                                            'type' => 'string',
-                                            'sentAs' => 'x-obs-expires'
+                                    'Expires' => [
+                                        'location' => 'header',
+                                        'type' => 'string',
+                                        'sentAs' => 'x-obs-expires'
                                     ]
                             ],
                             'responseParameters' => [ 
@@ -3461,23 +3268,23 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3584,6 +3391,9 @@ class OBSRequestResource {
                                                                     'Owner' => [ 
                                                                             'type' => 'object',
                                                                             'properties' => [ 
+                                                                                    'DisplayName' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
                                                                                     'ID' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
@@ -3593,6 +3403,9 @@ class OBSRequestResource {
                                                                             'type' => 'object',
                                                                             'properties' => [ 
                                                                                     'ID' => [ 
+                                                                                            'type' => 'string'
+                                                                                    ],
+                                                                                    'DisplayName' => [ 
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -3618,7 +3431,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -3649,7 +3462,7 @@ class OBSRequestResource {
                                     'properties' => [ 
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -3708,11 +3521,11 @@ class OBSRequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -3725,23 +3538,23 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3818,27 +3631,27 @@ class OBSRequestResource {
                                             'VersionId' => [ 
                                                     'type' => 'string',
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-version-id'
+                                                    'sentAs' => 'x-amz-version-id'
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -3938,6 +3751,9 @@ class OBSRequestResource {
                                                     'properties' => [ 
                                                             'ID' => [ 
                                                                     'type' => 'string'
+                                                            ],
+                                                            'DisplayName' => [ 
+                                                                    'type' => 'string'
                                                             ]
                                                     ]
                                             ],
@@ -3945,6 +3761,9 @@ class OBSRequestResource {
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'properties' => [ 
+                                                            'DisplayName' => [ 
+                                                                    'type' => 'string'
+                                                            ],
                                                             'ID' => [ 
                                                                     'type' => 'string'
                                                             ]
@@ -3956,7 +3775,7 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ]
                                     ]
                             ]
@@ -3974,12 +3793,12 @@ class OBSRequestResource {
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source'
+                                            'sentAs' => 'x-amz-copy-source'
                                     ],
                                     'CopySourceRange' => [ 
                                             'type' => 'string',
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-range'
+                                            'sentAs' => 'x-amz-copy-source-range'
                                     ],
                                     'Key' => [ 
                                             'required' => true,
@@ -4000,20 +3819,20 @@ class OBSRequestResource {
                                     ],
                                     'SseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                     ],
                                     'SseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
                                     'CopySourceSseC' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-algorithm'
+                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-algorithm'
                                     ],
                                     'CopySourceSseCKey' => [ 
                                             'location' => 'header',
-                                            'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-key',
+                                            'sentAs' => 'x-amz-copy-source-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
@@ -4030,23 +3849,23 @@ class OBSRequestResource {
                                             ],
                                             'RequestId' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-request-id'
+                                                    'sentAs' => 'x-amz-request-id'
                                             ],
                                             'SseKms' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption'
+                                                    'sentAs' => 'x-amz-server-side-encryption'
                                             ],
                                             'SseKmsKey' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
+                                                    'sentAs' => 'x-amz-server-side-encryption-aws-kms-key-id'
                                             ],
                                             'SseC' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-algorithm'
                                             ],
                                             'SseCKeyMd5' => [ 
                                                     'location' => 'header',
-                                                    'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
+                                                    'sentAs' => 'x-amz-server-side-encryption-customer-key-MD5'
                                             ]
                                     ]
                             ]
@@ -4066,6 +3885,6 @@ class OBSRequestResource {
                     'setBucketLifecycle' => 'setBucketLifecycleConfiguration',
                     'getBucketLifecycle' => 'getBucketLifecycleConfiguration',
                     'deleteBucketLifecycle' => 'deleteBucketLifecycleConfiguration'
-            ]
+            ]            
     ];
 }

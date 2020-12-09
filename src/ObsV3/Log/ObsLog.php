@@ -15,7 +15,7 @@
  *
  */
 
-namespace Obs\Log;
+namespace ObsV3\Log;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;

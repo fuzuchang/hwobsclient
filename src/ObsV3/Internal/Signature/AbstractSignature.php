@@ -15,17 +15,17 @@
  *
  */
 
-namespace Obs\Internal\Signature;
+namespace ObsV3\Internal\Signature;
 
-use Obs\Log\ObsLog;
-use Obs\Internal\Resource\Constants;
-use Obs\ObsException;
-use Obs\Internal\Common\SchemaFormatter;
+use ObsV3\Log\ObsLog;
+use ObsV3\Internal\Resource\Constants;
+use ObsV3\ObsException;
+use ObsV3\Internal\Common\SchemaFormatter;
 use GuzzleHttp\Psr7\Stream;
-use Obs\Internal\Common\Model;
+use ObsV3\Internal\Common\Model;
 use Psr\Http\Message\StreamInterface;
-use Obs\Internal\Common\ObsTransform;
-use Obs\Internal\Common\V2Transform;
+use ObsV3\Internal\Common\ObsTransform;
+use ObsV3\Internal\Common\V2Transform;
 
 abstract class AbstractSignature implements SignatureInterface
 {

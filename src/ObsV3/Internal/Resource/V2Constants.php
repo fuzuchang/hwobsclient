@@ -14,7 +14,7 @@
  *
  */
 
-namespace Obs\Internal\Resource;
+namespace ObsV3\Internal\Resource;
 
 class V2Constants extends Constants {
     const FLAG = 'AWS';

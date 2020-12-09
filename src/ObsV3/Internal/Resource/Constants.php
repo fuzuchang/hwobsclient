@@ -15,7 +15,7 @@
  *
  */
 
-namespace Obs\Internal\Resource;
+namespace ObsV3\Internal\Resource;
 
 class Constants {
     const ALLOWED_RESOURCE_PARAMTER_NAMES = [ 

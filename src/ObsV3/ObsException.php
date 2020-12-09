@@ -15,11 +15,11 @@
  *
  */
 
-namespace Obs;
+namespace ObsV3;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Obs\Log\ObsLog;
+use ObsV3\Log\ObsLog;
 
 class ObsException extends \RuntimeException
 {

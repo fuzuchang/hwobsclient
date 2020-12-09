@@ -15,7 +15,7 @@
  *
  */
 
-namespace Obs\Internal\Common;
+namespace ObsV3\Internal\Common;
 
 
 class SchemaFormatter
